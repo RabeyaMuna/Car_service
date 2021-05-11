@@ -17,6 +17,7 @@ if (isset($_POST['confirm_edit_button'])) {
   $appointment_id = $_SESSION['appointment_id'];
   $time_from = $_POST['time_from'];
   $time_to = $_POST['time_to'];
+  $Status = $_POST['Status'];
   //Getting selected mechanic's mechanic_id by mechanic_name
   $db = mysqli_connect('localhost', 'root', '', 'Car_service');
   $result = mysqli_query($db, "SELECT `appointment_id` FROM `appointments` WHERE `appointment_id` = '$appointment_id'")
@@ -25,7 +26,7 @@ if (isset($_POST['confirm_edit_button'])) {
   $appointment_id = $row[0];
 
   //Requesting the edit update
-  $query = "UPDATE appointments SET Time_from ='$time_from', Time_to = '$time_to' WHERE appointment_id='$appointment_id'";
+  $query = "UPDATE appointments SET Time_from ='$time_from', Time_to = '$time_to',Status='$Status' WHERE appointment_id='$appointment_id'";
   if (mysqli_query($db, $query)) {
     $confirmation = "The appointment has been modified successfully.";
   } else {
@@ -70,20 +71,21 @@ if (isset($_POST['confirm_edit_button'])) {
 
       $db = mysqli_connect('localhost', 'root', '', 'Car_service');
       $query =
-        "SELECT Time_from, Time_to from appointments where appointments.mechanic_id = $mech_id";
-   
+        "SELECT * from appointments where appointments.mechanic_id = $mech_id";
+
       $result = mysqli_query($db, $query) or die($query . "<br/><br/>" . mysqli_error($db));
 
       while ($rows = mysqli_fetch_assoc($result)) {
         $time_from = $rows['Time_from'];
         $time_to = $rows['Time_to'];
+        $Status = $rows['Status'];
         //print_r($rows);
       }
       ?>
 
       <!-- Top right nav bar -->
       <p style="float: right;">
-        
+
         <a href="index.php?logout='1'" style="color: red;">Logout</a>
       </p><br>
 
@@ -91,14 +93,18 @@ if (isset($_POST['confirm_edit_button'])) {
       <!--<h3 text-align="center">-- Appointment Information --</h3> -->
       <form method="post" style="width: 80%; padding-top: 0px; padding-bottom: 5px;margin-top: 5px;margin-bottom: 20px; border-radius: 3px 3px 3px 3px; border: 1px solid black;">
         <div class="input-group">
+          <label>Status</label>
+          <input type="text" name="Status" value="<?php echo $Status; ?>">
+        </div>
+        <div class="input-group">
           <label>Time From (HH:MM:SS)</label>
-          <input type="time" name="time_from" value="<?php echo $time_from; ?>" >
+          <input type="time" name="time_from" value="<?php echo $time_from; ?>">
         </div>
         <div class="input-group">
           <label>Time to (HH:MM:SS)</label>
-          <input type="time" name="time_to" value="<?php echo $time_to; ?>" >
+          <input type="time" name="time_to" value="<?php echo $time_to; ?>">
         </div>
-        
+
 
         <p>
           <input type=submit name="confirm_edit_button" value="Confirm Edit" style="width:40%; padding: 10px;margin-top: 5px;margin-bottom: 8px;">
