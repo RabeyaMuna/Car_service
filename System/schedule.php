@@ -61,7 +61,7 @@ $result = "";
         <section>
             <table style="width:100%; line-height:45px;border: 2px solid black;text-align:center;">
                 <?php
-                $res = "SELECT appointments.Time_from,users.username,appointments.Time_to,appointments.date,appointments.mechanic_id,mechanics.mech_username,mechanics.mechanic_id  FROM `appointments`  join mechanics  on appointments.mechanic_id=mechanics.mechanic_id join users on  appointments.user_id=users.user_id";
+                $res = "SELECT appointments.Time_from,users.username,appointments.Time_to,appointments.date,appointments.mechanic_id,mechanics.mech_username,mechanics.mechanic_id,appointments.Status FROM `appointments`  join mechanics  on appointments.mechanic_id=mechanics.mechanic_id join users on  appointments.user_id=users.user_id";
                 $result = mysqli_query($db, $res);
                 // print($result);
                 ?>
@@ -73,7 +73,7 @@ $result = "";
                     </tr>
                     <tr>
                         <th>Mechanic name</th>
-                        <th>Customer</th>
+                        <th>Status</th>
                         <th>Date</th>
                         <th>Time From</th>
                         <th>Time_to</th>
@@ -84,7 +84,7 @@ $result = "";
                     ?>
                         <tr style="text-align:center">
                             <td><?php echo $rows['mech_username'] ?></td>
-                            <td><?php echo $rows['username'] ?></td>
+                            <td><?php echo $rows['Status'] ?></td>
                             <td><?php echo $rows['date'] ?></td>
                             <td><?php echo $rows['Time_from'] ?></td>
                             <td><?php echo $rows['Time_to'] ?></td>
